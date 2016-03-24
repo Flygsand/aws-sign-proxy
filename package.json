@@ -1,0 +1,16 @@
+{
+  "name": "aws-sign-proxy",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "WOW! Group Development <oss@wow-group.com>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.2.46",
+    "basic-auth": "^1.0.3",
+    "body-parser": "^1.15.0",
+    "connect": "^3.4.1",
+    "http-proxy": "^1.13.2",
+    "minimist": "^1.2.0",
+    "winston": "^2.2.0"
+  }
+}
