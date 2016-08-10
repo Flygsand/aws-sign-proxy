@@ -67,13 +67,13 @@ function exitBadArgument(arg) {
 }
 
 function main(args) {
-  var port = parseInt(args.port);
+  var port = parseInt(args.port || process.env['PORT']);
   if (isNaN(port)) {
     exitBadArgument('port');
   }
 
   ['endpoint', 'region', 'service'].forEach(function(arg) {
-    if (!(arg in args)) {
+    if (!(arg in args) && !(arg.toUpperCase().replace('-', '_') in process.env)) {
       exitBadArgument(arg);
     }
   });
@@ -81,7 +81,11 @@ function main(args) {
   var app = connect();
   app.use(credentials());
   app.use(bodyParser.raw({type: '*/*'}));
-  app.use(proxy(new AWS.Endpoint(args.endpoint), args.region, args.service));
+  app.use(proxy(
+    new AWS.Endpoint(args.endpoint || process.env['ENDPOINT']),
+    args.region || process.env['REGION'],
+    args.service || process.env['SERVICE']
+  ));
 
   winston.info('listening on port ' + port)
   http.createServer(app).listen(port);
